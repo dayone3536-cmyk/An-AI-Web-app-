@@ -22,18 +22,13 @@ def welcoming():
 @app.route("/display", methods = ["POST"])
 def display():
 
-    try:
-        user_input = request.form["user_name"] #returns an immutable dictionary
+    user_input = request.form["user_name"] #returns an immutable dictionary
 
-        client = genai.Client(api_key = API_KEY)
+    client = genai.Client(api_key = API_KEY)
         
-        response = client.models.generate_content(
-            model= "gemini-3-flash-preview", contents=user_input 
-        )
+    response = client.models.generate_content(
+        model= "gemini-3-flash-preview", contents=user_input 
+    )
 
-        return render_template("index.html", text = response.text, user_input = user_input)
-    
-
-    except:
-        return "please Wait for a few moments before returning to the page. "
+    return render_template("index.html", text = response.text, user_input = user_input)
     
