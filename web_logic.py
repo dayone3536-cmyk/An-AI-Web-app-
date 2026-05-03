@@ -37,5 +37,3 @@ def display():
     except:
         return "please Wait for a few moments before returning to the page. "
     
-if __name__ == "__main__":
-    app.run(debug=True)
