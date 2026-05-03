@@ -21,14 +21,17 @@ def welcoming():
 
 @app.route("/display", methods = ["POST"])
 def display():
-
-    user_input = request.form["user_name"] #returns an immutable dictionary
-
-    client = genai.Client(api_key = API_KEY)
+    try:
+        user_input = request.form["user_name"] #returns an immutable dictionary
+    
+        client = genai.Client(api_key = API_KEY)
+            
+        response = client.models.generate_content(
+            model= "gemini-3-flash-preview", contents=user_input 
+        )
+    
+        return render_template("index.html", text = response.text, user_input = user_input)
         
-    response = client.models.generate_content(
-        model= "gemini-3-flash-preview", contents=user_input 
-    )
-
-    return render_template("index.html", text = response.text, user_input = user_input)
+    except Exception as e:
+        return f"The Error is {e}"
     
